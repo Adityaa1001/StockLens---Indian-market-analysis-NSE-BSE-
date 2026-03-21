@@ -211,7 +211,7 @@ Enter any valid Yahoo Finance ticker (e.g. `TATASTEEL.NS`, `ONGC.NS`)
 
 The app is deployed on **Streamlit Cloud** and accessible at:
 
-🔗 **[hdfc-price-action-dashboard.streamlit.app](https://hdfc-price-action-dashboard.streamlit.app)**
+🔗 **[https:/StockLenss.streamlit.app)**
 
 ---
 
