@@ -172,18 +172,56 @@ def get_indices():
 
 @st.cache_data(ttl=3600)
 def fetch(ticker, start, end):
-    # Use local CSV for HDFC Bank to avoid rate limiting
-    if ticker in ("HDFCBANK.NS", "HDFCBANK.BO"):
+    # Map tickers to CSV files
+    ticker_map = {
+        "HDFCBANK.NS":  "stock_data/HDFCBANK.csv",
+        "RELIANCE.NS":  "stock_data/RELIANCE.csv",
+        "TCS.NS":       "stock_data/TCS.csv",
+        "INFY.NS":      "stock_data/INFY.csv",
+        "ICICIBANK.NS": "stock_data/ICICIBANK.csv",
+        "SBIN.NS":      "stock_data/SBIN.csv",
+        "WIPRO.NS":     "stock_data/WIPRO.csv",
+        "BHARTIARTL.NS":"stock_data/BHARTIARTL.csv",
+        "KOTAKBANK.NS": "stock_data/KOTAKBANK.csv",
+        "AXISBANK.NS":  "stock_data/AXISBANK.csv",
+        "ITC.NS":       "stock_data/ITC.csv",
+        "MARUTI.NS":    "stock_data/MARUTI.csv",
+        "BAJFINANCE.NS":"stock_data/BAJFINANCE.csv",
+        "SUNPHARMA.NS": "stock_data/SUNPHARMA.csv",
+        "TITAN.NS":     "stock_data/TITAN.csv",
+        "TATAMOTORS.NS":"stock_data/TATAMOTORS.csv",
+        "POWERGRID.NS": "stock_data/POWERGRID.csv",
+        "ADANIPORTS.NS":"stock_data/ADANIPORTS.csv",
+        "ASIANPAINT.NS":"stock_data/ASIANPAINT.csv",
+        "ULTRACEMCO.NS":"stock_data/ULTRACEMCO.csv",
+        "HDFCBANK.BO":  "stock_data/HDFCBANK.csv",
+        "RELIANCE.BO":  "stock_data/RELIANCE.csv",
+        "TCS.BO":       "stock_data/TCS.csv",
+        "INFY.BO":      "stock_data/INFY.csv",
+        "ICICIBANK.BO": "stock_data/ICICIBANK.csv",
+        "SBIN.BO":      "stock_data/SBIN.csv",
+        "WIPRO.BO":     "stock_data/WIPRO.csv",
+        "ITC.BO":       "stock_data/ITC.csv",
+        "MARUTI.BO":    "stock_data/MARUTI.csv",
+        "SUNPHARMA.BO": "stock_data/SUNPHARMA.csv",
+    }
+
+    # Load from CSV if available
+    if ticker in ticker_map:
         try:
-            df = pd.read_csv("hdfc_data.csv", index_col=0, parse_dates=True)
+            df = pd.read_csv(ticker_map[ticker],
+                             index_col=0, parse_dates=True)
             df.index = pd.to_datetime(df.index)
             if df.index.tz is not None:
                 df.index = df.index.tz_localize(None)
             df = df[(df.index >= pd.Timestamp(start)) &
                     (df.index <= pd.Timestamp(end))].copy()
-            return df
+            if not df.empty:
+                return df
         except Exception:
             pass
+
+    # Fallback to live fetch for custom tickers
     try:
         df = yf.download(ticker, start=str(start), end=str(end),
                          auto_adjust=True, progress=False)
@@ -194,11 +232,11 @@ def fetch(ticker, start, end):
         df.index = pd.to_datetime(df.index)
         if df.index.tz is not None:
             df.index = df.index.tz_localize(None)
-        df.drop(columns=["Dividends","Stock Splits"], inplace=True, errors='ignore')
+        df.drop(columns=["Dividends","Stock Splits"],
+                inplace=True, errors='ignore')
         return df
     except Exception:
         return pd.DataFrame()
-
 def add_indicators(df, rsi_p=14, bb_p=20):
     df = df.copy()
     df['SMA_20']   = df['Close'].rolling(20).mean()
