@@ -18,31 +18,31 @@ st.markdown("""
 
 html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
 
-.stApp { background-color: #f0f2f5; }
+.stApp { background-color: #1a237e; }
 
 section[data-testid="stSidebar"] {
-    background: #1e1e2e !important;
-    border-right: none;
+    background: #0d1257 !important;
+    border-right: 1px solid #283593;
 }
 
-section[data-testid="stSidebar"] * { color: #cdd6f4 !important; }
+section[data-testid="stSidebar"] * { color: #90caf9 !important; }
 
 .sidebar-brand {
     padding: 24px 16px 32px;
-    border-bottom: 1px solid #313244;
+    border-bottom: 1px solid #283593;
     margin-bottom: 16px;
 }
 
 .brand-logo {
     font-size: 1.6rem;
     font-weight: 700;
-    color: #cba6f7 !important;
+    color: #90caf9 !important;
     letter-spacing: -0.5px;
 }
 
 .brand-sub {
     font-size: 0.75rem;
-    color: #6c7086 !important;
+    color: #5c6bc0 !important;
     margin-top: 2px;
 }
 
@@ -51,69 +51,65 @@ section[data-testid="stSidebar"] * { color: #cdd6f4 !important; }
     border-radius: 10px;
     margin: 4px 0;
     cursor: pointer;
-    transition: background 0.2s;
-    color: #a6adc8 !important;
+    color: #7986cb !important;
     font-size: 0.9rem;
 }
 
 .nav-item-active {
-    background: #313244;
-    color: #cba6f7 !important;
+    background: #283593;
+    color: #90caf9 !important;
     font-weight: 600;
-}
-
-.page-header {
-    margin-bottom: 24px;
 }
 
 .page-title {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #1e1e2e;
+    color: #ffffff;
     margin: 0;
 }
 
 .page-subtitle {
     font-size: 0.85rem;
-    color: #6c7086;
+    color: #90caf9;
     margin-top: 4px;
+    margin-bottom: 20px;
 }
 
 .card {
-    background: white;
+    background: #1e2a9a;
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
     margin-bottom: 16px;
-    transition: box-shadow 0.2s, transform 0.2s;
 }
 
 .card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     transform: translateY(-2px);
+    transition: all 0.2s;
 }
 
 .metric-card {
-    background: white;
+    background: #1e2a9a;
     border-radius: 16px;
     padding: 20px 20px 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    box-shadow: 0 1px 8px rgba(0,0,0,0.3);
     margin-bottom: 16px;
-    transition: all 0.2s;
     border-left: 4px solid transparent;
+    transition: all 0.2s;
 }
 
 .metric-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     transform: translateY(-2px);
 }
 
-.metric-card-blue  { border-left-color: #89b4fa; }
-.metric-card-green { border-left-color: #a6e3a1; }
-.metric-card-red   { border-left-color: #f38ba8; }
-.metric-card-purple{ border-left-color: #cba6f7; }
-.metric-card-yellow{ border-left-color: #f9e2af; }
-.metric-card-teal  { border-left-color: #94e2d5; }
+.metric-card-blue   { border-left-color: #64b5f6; }
+.metric-card-green  { border-left-color: #81c784; }
+.metric-card-red    { border-left-color: #e57373; }
+.metric-card-purple { border-left-color: #ce93d8; }
+.metric-card-yellow { border-left-color: #fff176; }
+.metric-card-teal   { border-left-color: #80cbc4; }
 
 .metric-icon {
     width: 40px;
@@ -126,40 +122,26 @@ section[data-testid="stSidebar"] * { color: #cdd6f4 !important; }
     margin-bottom: 12px;
 }
 
-.icon-blue   { background: #e8f0fe; }
-.icon-green  { background: #e6f4ea; }
-.icon-red    { background: #fce8e6; }
-.icon-purple { background: #f3e8fd; }
-.icon-yellow { background: #fef9e7; }
-.icon-teal   { background: #e0f7fa; }
+.icon-blue   { background: #1565c0; }
+.icon-green  { background: #1b5e20; }
+.icon-red    { background: #b71c1c; }
+.icon-purple { background: #4a148c; }
+.icon-yellow { background: #f57f17; }
+.icon-teal   { background: #004d40; }
 
 .metric-value {
     font-size: 1.6rem;
     font-weight: 700;
-    color: #1e1e2e;
+    color: #ffffff;
     line-height: 1;
 }
 
 .metric-label {
     font-size: 0.78rem;
-    color: #9399b2;
+    color: #90caf9;
     text-transform: uppercase;
     letter-spacing: 0.8px;
     margin-top: 4px;
-}
-
-.metric-change-pos {
-    font-size: 0.8rem;
-    color: #40a02b;
-    font-weight: 500;
-    margin-top: 8px;
-}
-
-.metric-change-neg {
-    font-size: 0.8rem;
-    color: #d20f39;
-    font-weight: 500;
-    margin-top: 8px;
 }
 
 .signal-pill {
@@ -171,17 +153,17 @@ section[data-testid="stSidebar"] * { color: #cdd6f4 !important; }
     letter-spacing: 0.5px;
 }
 
-.pill-buy    { background: #e6f4ea; color: #40a02b; }
-.pill-sell   { background: #fce8e6; color: #d20f39; }
-.pill-hold   { background: #fef9e7; color: #df8e1d; }
+.pill-buy  { background: #1b5e20; color: #81c784; }
+.pill-sell { background: #b71c1c; color: #ef9a9a; }
+.pill-hold { background: #f57f17; color: #fff176; }
 
 .section-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #1e1e2e;
+    color: #ffffff;
     margin-bottom: 16px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #f0f2f5;
+    border-bottom: 2px solid #283593;
 }
 
 .stat-row {
@@ -189,59 +171,32 @@ section[data-testid="stSidebar"] * { color: #cdd6f4 !important; }
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #f0f2f5;
+    border-bottom: 1px solid #283593;
     font-size: 0.875rem;
 }
 
 .stat-row:last-child { border-bottom: none; }
-.stat-key   { color: #9399b2; }
-.stat-value { font-weight: 600; color: #1e1e2e; }
+.stat-key   { color: #90caf9; }
+.stat-value { font-weight: 600; color: #ffffff; }
 
 .pattern-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 12px;
-    background: #f8f9fa;
+    background: #283593;
     border-radius: 10px;
     margin-bottom: 8px;
     transition: background 0.2s;
 }
 
-.pattern-row:hover { background: #f0f2f5; }
-
-.progress-bar-bg {
-    background: #f0f2f5;
-    border-radius: 10px;
-    height: 6px;
-    margin-top: 6px;
-    overflow: hidden;
-}
-
-.progress-bar-fill {
-    height: 6px;
-    border-radius: 10px;
-    transition: width 0.5s ease;
-}
-
-.tag {
-    display: inline-block;
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 0.7rem;
-    font-weight: 600;
-}
-
-.tag-green  { background:#e6f4ea; color:#40a02b; }
-.tag-red    { background:#fce8e6; color:#d20f39; }
-.tag-yellow { background:#fef9e7; color:#df8e1d; }
-.tag-blue   { background:#e8f0fe; color:#1a73e8; }
+.pattern-row:hover { background: #303f9f; }
 
 .footer-card {
-    background: #1e1e2e;
+    background: #0d1257;
     border-radius: 16px;
     padding: 20px 24px;
-    color: #cdd6f4;
+    color: #90caf9;
     font-size: 0.82rem;
     margin-top: 8px;
     display: flex;
@@ -258,9 +213,6 @@ with st.sidebar:
         <div class='brand-logo'>🔭 StockLens</div>
         <div class='brand-sub'>HDFC Bank Analytics Platform</div>
     </div>
-    """, unsafe_allow_html=True)
-
-    st.markdown("""
     <div class='nav-item nav-item-active'>📊 &nbsp; Dashboard</div>
     <div class='nav-item'>💹 &nbsp; Price Action</div>
     <div class='nav-item'>📈 &nbsp; Indicators</div>
@@ -278,10 +230,10 @@ with st.sidebar:
     chart_type = st.selectbox("Type", ["Candlestick", "Line", "OHLC"], label_visibility="collapsed")
 
     st.markdown("**📈 Overlays**")
-    show_sma  = st.checkbox("Moving Averages",   value=True)
-    show_ema  = st.checkbox("EMA 20",            value=True)
-    show_bb   = st.checkbox("Bollinger Bands",   value=True)
-    show_vwap = st.checkbox("VWAP",              value=False)
+    show_sma  = st.checkbox("Moving Averages", value=True)
+    show_ema  = st.checkbox("EMA 20",          value=True)
+    show_bb   = st.checkbox("Bollinger Bands", value=True)
+    show_vwap = st.checkbox("VWAP",            value=False)
 
     st.markdown("**🕯️ Patterns**")
     show_patterns = st.checkbox("Show on Chart", value=True)
@@ -291,8 +243,8 @@ with st.sidebar:
     bb_period  = st.slider("BB",  10, 50, 20)
 
     st.markdown("""
-    <div style='background:#313244;border-radius:10px;padding:12px;margin-top:16px;
-    font-size:0.75rem;color:#6c7086;'>
+    <div style='background:#283593;border-radius:10px;padding:12px;margin-top:16px;
+    font-size:0.75rem;color:#7986cb;'>
     📡 NSE · Yahoo Finance<br>
     🗓️ 2020 – 2025<br>
     🔄 CSV-cached data
@@ -357,49 +309,52 @@ if df.empty:
     st.stop()
 
 # ── Computed Values ────────────────────────────────────────────
-cur   = df['Close'].iloc[-1]
-prev  = df['Close'].iloc[-2]
-chg   = cur - prev
-chgp  = chg / prev * 100
-rsi   = df['RSI'].iloc[-1]
-macd  = df['MACD'].iloc[-1]
-hi52  = df['High'].tail(252).max()
-lo52  = df['Low'].tail(252).min()
+cur       = df['Close'].iloc[-1]
+prev      = df['Close'].iloc[-2]
+chg       = cur - prev
+chgp      = chg / prev * 100
+rsi       = df['RSI'].iloc[-1]
+macd      = df['MACD'].iloc[-1]
+hi52      = df['High'].tail(252).max()
+lo52      = df['Low'].tail(252).min()
 total_ret = ((cur / df['Close'].iloc[0]) - 1) * 100
 sharpe    = df['Daily_Return'].mean() / df['Daily_Return'].std() * np.sqrt(252)
 max_dd    = ((df['Close'] / df['Close'].cummax()) - 1).min() * 100
+vol_colors= ['#81c784' if c >= o else '#e57373' for c, o in zip(df['Close'], df['Open'])]
 
 # ── Page Header ────────────────────────────────────────────────
 st.markdown(f"""
-<div class='page-header'>
+<div>
     <h1 class='page-title'>Dashboard
-        <span style='font-size:0.9rem;font-weight:400;color:#9399b2;margin-left:12px;'>
-        NSE: HDFCBANK &nbsp;·&nbsp; {df.index[0].strftime('%d %b %Y')} — {df.index[-1].strftime('%d %b %Y')}
+        <span style='font-size:0.9rem;font-weight:400;color:#90caf9;margin-left:12px;'>
+        NSE: HDFCBANK &nbsp;·&nbsp;
+        {df.index[0].strftime('%d %b %Y')} — {df.index[-1].strftime('%d %b %Y')}
         </span>
     </h1>
     <p class='page-subtitle'>
         {'🟢' if chg>=0 else '🔴'} ₹{cur:.2f} &nbsp;
-        <strong style='color:{"#40a02b" if chg>=0 else "#d20f39"}'>
+        <strong style='color:{"#81c784" if chg>=0 else "#e57373"}'>
         {'▲' if chg>=0 else '▼'} ₹{abs(chg):.2f} ({chgp:+.2f}%)
-        </strong> &nbsp;·&nbsp; Last updated: {df.index[-1].strftime('%d %b %Y')}
+        </strong>
+        &nbsp;·&nbsp; Last updated: {df.index[-1].strftime('%d %b %Y')}
     </p>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Row 1: Metric Cards ────────────────────────────────────────
+# ── KPI Cards ──────────────────────────────────────────────────
 c1,c2,c3,c4,c5,c6 = st.columns(6)
 
 cards = [
-    (c1, "💰", "icon-blue",   "metric-card-blue",   f"₹{cur:.2f}",         "Current Price",   f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}% today", chg>=0),
-    (c2, "📈", "icon-green",  "metric-card-green",  f"₹{hi52:.2f}",        "52W High",        f"{((cur/hi52)-1)*100:.1f}% below high",          False),
-    (c3, "📉", "icon-red",    "metric-card-red",    f"₹{lo52:.2f}",        "52W Low",         f"{((cur/lo52)-1)*100:.1f}% above low",            True),
-    (c4, "⚡", "icon-purple", "metric-card-purple", f"{rsi:.1f}",          "RSI (14)",        "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", rsi<=70),
-    (c5, "📊", "icon-yellow", "metric-card-yellow", f"{total_ret:.1f}%",   "Total Return",    f"Since {df.index[0].strftime('%b %Y')}",          total_ret>0),
-    (c6, "🎯", "icon-teal",   "metric-card-teal",   f"{sharpe:.2f}",       "Sharpe Ratio",    "Risk-adjusted return",                            sharpe>1),
+    (c1, "💰", "icon-blue",   "metric-card-blue",   f"₹{cur:.2f}",       "Current Price",  f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}% today",       chg>=0),
+    (c2, "📈", "icon-green",  "metric-card-green",  f"₹{hi52:.2f}",      "52W High",       f"{((cur/hi52)-1)*100:.1f}% below high",                False),
+    (c3, "📉", "icon-red",    "metric-card-red",    f"₹{lo52:.2f}",      "52W Low",        f"{((cur/lo52)-1)*100:.1f}% above low",                 True),
+    (c4, "⚡", "icon-purple", "metric-card-purple", f"{rsi:.1f}",        "RSI (14)",       "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", rsi<=70),
+    (c5, "📊", "icon-yellow", "metric-card-yellow", f"{total_ret:.1f}%", "Total Return",   f"Since {df.index[0].strftime('%b %Y')}",               total_ret>0),
+    (c6, "🎯", "icon-teal",   "metric-card-teal",   f"{sharpe:.2f}",     "Sharpe Ratio",   "Risk-adjusted return",                                 sharpe>1),
 ]
 
 for col, icon, icon_cls, card_cls, val, label, sub, pos in cards:
-    color = "#40a02b" if pos else "#d20f39"
+    color = "#81c784" if pos else "#e57373"
     col.markdown(f"""
     <div class='metric-card {card_cls}'>
         <div class='metric-icon {icon_cls}'>{icon}</div>
@@ -409,7 +364,7 @@ for col, icon, icon_cls, card_cls, val, label, sub, pos in cards:
     </div>
     """, unsafe_allow_html=True)
 
-# ── Row 2: Chart + Signals ─────────────────────────────────────
+# ── Chart + Signals ────────────────────────────────────────────
 chart_col, signal_col = st.columns([3, 1])
 
 with chart_col:
@@ -420,204 +375,174 @@ with chart_col:
                         row_heights=[0.6, 0.2, 0.2], vertical_spacing=0.02)
 
     if chart_type == "Candlestick":
-        fig.add_trace(go.Candlestick(x=df.index, open=df['Open'], high=df['High'],
-                                      low=df['Low'], close=df['Close'], name='HDFC',
-                                      increasing_line_color='#40a02b',
-                                      decreasing_line_color='#d20f39'), row=1, col=1)
+        fig.add_trace(go.Candlestick(
+            x=df.index, open=df['Open'], high=df['High'],
+            low=df['Low'], close=df['Close'], name='HDFC',
+            increasing_line_color='#81c784', decreasing_line_color='#e57373'
+        ), row=1, col=1)
     elif chart_type == "OHLC":
-        fig.add_trace(go.Ohlc(x=df.index, open=df['Open'], high=df['High'],
-                              low=df['Low'], close=df['Close'], name='HDFC'), row=1, col=1)
+        fig.add_trace(go.Ohlc(
+            x=df.index, open=df['Open'], high=df['High'],
+            low=df['Low'], close=df['Close'], name='HDFC'
+        ), row=1, col=1)
     else:
-        fig.add_trace(go.Scatter(x=df.index, y=df['Close'], name='Close',
-                                 line=dict(color='#1a73e8', width=2),
-                                 fill='tozeroy', fillcolor='rgba(26,115,232,0.06)'), row=1, col=1)
+        fig.add_trace(go.Scatter(
+            x=df.index, y=df['Close'], name='Close',
+            line=dict(color='#64b5f6', width=2),
+            fill='tozeroy', fillcolor='rgba(100,181,246,0.1)'
+        ), row=1, col=1)
 
     if show_sma:
-        for col_name, color, name in [('SMA_20','#df8e1d','SMA 20'),
-                                       ('SMA_50','#40a02b','SMA 50'),
-                                       ('SMA_200','#d20f39','SMA 200')]:
+        for col_name, color, name in [
+            ('SMA_20', '#fff176', 'SMA 20'),
+            ('SMA_50', '#81c784', 'SMA 50'),
+            ('SMA_200','#e57373', 'SMA 200')
+        ]:
             fig.add_trace(go.Scatter(x=df.index, y=df[col_name], name=name,
                                      line=dict(color=color, width=1.2)), row=1, col=1)
 
     if show_ema:
         fig.add_trace(go.Scatter(x=df.index, y=df['EMA_20'], name='EMA 20',
-                                 line=dict(color='#8839ef', width=1.2, dash='dot')), row=1, col=1)
+                                 line=dict(color='#ce93d8', width=1.2, dash='dot')), row=1, col=1)
 
     if show_vwap:
         fig.add_trace(go.Scatter(x=df.index, y=df['VWAP'], name='VWAP',
-                                 line=dict(color='#04a5e5', width=1.2, dash='dash')), row=1, col=1)
+                                 line=dict(color='#80cbc4', width=1.2, dash='dash')), row=1, col=1)
 
     if show_bb:
         fig.add_trace(go.Scatter(x=df.index, y=df['BB_Upper'], name='BB Upper',
-                                 line=dict(color='rgba(100,100,100,0.4)', width=0.8)), row=1, col=1)
+                                 line=dict(color='rgba(144,202,249,0.4)', width=0.8)), row=1, col=1)
         fig.add_trace(go.Scatter(x=df.index, y=df['BB_Lower'], name='BB Lower',
-                                 line=dict(color='rgba(100,100,100,0.4)', width=0.8),
-                                 fill='tonexty', fillcolor='rgba(100,100,100,0.05)'), row=1, col=1)
+                                 line=dict(color='rgba(144,202,249,0.4)', width=0.8),
+                                 fill='tonexty', fillcolor='rgba(144,202,249,0.05)'), row=1, col=1)
 
     if show_patterns:
         doji_df   = df[df['Doji']]
         hammer_df = df[df['Hammer']]
         bull_df   = df[df['Bullish_Engulfing']]
         bear_df   = df[df['Bearish_Engulfing']]
-        fig.add_trace(go.Scatter(x=doji_df.index, y=doji_df['High']*1.01,
-                                 mode='markers', name='Doji',
-                                 marker=dict(symbol='circle-open', color='#df8e1d', size=8, line=dict(width=2))), row=1, col=1)
-        fig.add_trace(go.Scatter(x=hammer_df.index, y=hammer_df['Low']*0.99,
-                                 mode='markers', name='Hammer',
-                                 marker=dict(symbol='triangle-up', color='#40a02b', size=10)), row=1, col=1)
-        fig.add_trace(go.Scatter(x=bull_df.index, y=bull_df['Low']*0.99,
-                                 mode='markers', name='Bull Engulf',
-                                 marker=dict(symbol='star', color='#40a02b', size=11)), row=1, col=1)
-        fig.add_trace(go.Scatter(x=bear_df.index, y=bear_df['High']*1.01,
-                                 mode='markers', name='Bear Engulf',
-                                 marker=dict(symbol='star', color='#d20f39', size=11)), row=1, col=1)
+        fig.add_trace(go.Scatter(x=doji_df.index, y=doji_df['High']*1.01, mode='markers',
+                                 name='Doji', marker=dict(symbol='circle-open', color='#fff176',
+                                 size=8, line=dict(width=2))), row=1, col=1)
+        fig.add_trace(go.Scatter(x=hammer_df.index, y=hammer_df['Low']*0.99, mode='markers',
+                                 name='Hammer', marker=dict(symbol='triangle-up',
+                                 color='#81c784', size=10)), row=1, col=1)
+        fig.add_trace(go.Scatter(x=bull_df.index, y=bull_df['Low']*0.99, mode='markers',
+                                 name='Bull Engulf', marker=dict(symbol='star',
+                                 color='#81c784', size=11)), row=1, col=1)
+        fig.add_trace(go.Scatter(x=bear_df.index, y=bear_df['High']*1.01, mode='markers',
+                                 name='Bear Engulf', marker=dict(symbol='star',
+                                 color='#e57373', size=11)), row=1, col=1)
 
-    vol_colors = ['#40a02b' if c >= o else '#d20f39' for c, o in zip(df['Close'], df['Open'])]
     fig.add_trace(go.Bar(x=df.index, y=df['Volume'], name='Volume',
                          marker_color=vol_colors, opacity=0.6), row=2, col=1)
 
     fig.add_trace(go.Scatter(x=df.index, y=df['RSI'], name='RSI',
-                             line=dict(color='#df8e1d', width=1.5)), row=3, col=1)
-    fig.add_hrect(y0=70, y1=100, fillcolor='rgba(210,15,57,0.06)',  line_width=0, row=3, col=1)
-    fig.add_hrect(y0=0,  y1=30,  fillcolor='rgba(64,160,43,0.06)',  line_width=0, row=3, col=1)
-    fig.add_hline(y=70, line_dash='dash', line_color='#d20f39', line_width=1, row=3, col=1)
-    fig.add_hline(y=30, line_dash='dash', line_color='#40a02b', line_width=1, row=3, col=1)
+                             line=dict(color='#fff176', width=1.5)), row=3, col=1)
+    fig.add_hrect(y0=70, y1=100, fillcolor='rgba(229,115,115,0.1)', line_width=0, row=3, col=1)
+    fig.add_hrect(y0=0,  y1=30,  fillcolor='rgba(129,199,132,0.1)', line_width=0, row=3, col=1)
+    fig.add_hline(y=70, line_dash='dash', line_color='#e57373', line_width=1, row=3, col=1)
+    fig.add_hline(y=30, line_dash='dash', line_color='#81c784', line_width=1, row=3, col=1)
 
     fig.update_layout(
         height=560,
-        template='plotly_white',
+        template='plotly_dark',
         xaxis_rangeslider_visible=False,
-        paper_bgcolor='white',
-        plot_bgcolor='white',
+        paper_bgcolor='#1e2a9a',
+        plot_bgcolor='#1e2a9a',
         legend=dict(orientation='h', yanchor='bottom', y=1.01,
-                    bgcolor='rgba(0,0,0,0)', font=dict(size=11)),
-        font=dict(family='Inter', color='#1e1e2e'),
+                    bgcolor='rgba(0,0,0,0)', font=dict(size=11, color='#90caf9')),
+        font=dict(family='Inter', color='#90caf9'),
         margin=dict(l=0, r=0, t=30, b=0)
     )
     for i in range(1, 4):
-        fig.update_xaxes(gridcolor='#f0f2f5', showline=False, row=i, col=1)
-        fig.update_yaxes(gridcolor='#f0f2f5', showline=False, row=i, col=1)
+        fig.update_xaxes(gridcolor='#283593', showline=False, row=i, col=1)
+        fig.update_yaxes(gridcolor='#283593', showline=False, row=i, col=1)
 
     st.plotly_chart(fig, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
 with signal_col:
-    # Trading Signals Card
-    rsi_sig   = ("BUY",  "pill-buy")  if rsi < 30 else ("SELL", "pill-sell") if rsi > 70 else ("HOLD", "pill-hold")
-    macd_sig  = ("BUY",  "pill-buy")  if macd > 0 else ("SELL", "pill-sell")
-    sma_sig   = ("BUY",  "pill-buy")  if cur > df['SMA_200'].iloc[-1] else ("SELL", "pill-sell")
-    bb_pos    = (cur - df['BB_Lower'].iloc[-1]) / (df['BB_Upper'].iloc[-1] - df['BB_Lower'].iloc[-1])
-    bb_sig    = ("BUY",  "pill-buy")  if bb_pos < 0.2 else ("SELL", "pill-sell") if bb_pos > 0.8 else ("HOLD", "pill-hold")
-    vol_sig   = ("HIGH", "pill-sell") if df['Volatility'].iloc[-1] > df['Volatility'].mean()*1.5 else ("LOW", "pill-buy")
+    rsi_sig  = ("BUY",  "pill-buy")  if rsi < 30 else ("SELL", "pill-sell") if rsi > 70 else ("HOLD", "pill-hold")
+    macd_sig = ("BUY",  "pill-buy")  if macd > 0 else ("SELL", "pill-sell")
+    sma_sig  = ("BUY",  "pill-buy")  if cur > df['SMA_200'].iloc[-1] else ("SELL", "pill-sell")
+    bb_pos   = (cur - df['BB_Lower'].iloc[-1]) / (df['BB_Upper'].iloc[-1] - df['BB_Lower'].iloc[-1])
+    bb_sig   = ("BUY",  "pill-buy")  if bb_pos < 0.2 else ("SELL", "pill-sell") if bb_pos > 0.8 else ("HOLD", "pill-hold")
+    vol_sig  = ("HIGH", "pill-sell") if df['Volatility'].iloc[-1] > df['Volatility'].mean()*1.5 else ("LOW", "pill-buy")
 
     st.markdown(f"""
     <div class='card'>
         <div class='section-title'>🚦 Signals</div>
-        <div class='pattern-row'>
-            <span style='color:#6c7086;font-size:0.85rem;'>RSI ({rsi:.0f})</span>
-            <span class='signal-pill {rsi_sig[1]}'>{rsi_sig[0]}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='color:#6c7086;font-size:0.85rem;'>MACD</span>
-            <span class='signal-pill {macd_sig[1]}'>{macd_sig[0]}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='color:#6c7086;font-size:0.85rem;'>SMA 200</span>
-            <span class='signal-pill {sma_sig[1]}'>{sma_sig[0]}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='color:#6c7086;font-size:0.85rem;'>Bollinger</span>
-            <span class='signal-pill {bb_sig[1]}'>{bb_sig[0]}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='color:#6c7086;font-size:0.85rem;'>Volatility</span>
-            <span class='signal-pill {vol_sig[1]}'>{vol_sig[0]}</span>
-        </div>
+        <div class='pattern-row'><span style='color:#90caf9;font-size:0.85rem;'>RSI ({rsi:.0f})</span>
+            <span class='signal-pill {rsi_sig[1]}'>{rsi_sig[0]}</span></div>
+        <div class='pattern-row'><span style='color:#90caf9;font-size:0.85rem;'>MACD</span>
+            <span class='signal-pill {macd_sig[1]}'>{macd_sig[0]}</span></div>
+        <div class='pattern-row'><span style='color:#90caf9;font-size:0.85rem;'>SMA 200</span>
+            <span class='signal-pill {sma_sig[1]}'>{sma_sig[0]}</span></div>
+        <div class='pattern-row'><span style='color:#90caf9;font-size:0.85rem;'>Bollinger</span>
+            <span class='signal-pill {bb_sig[1]}'>{bb_sig[0]}</span></div>
+        <div class='pattern-row'><span style='color:#90caf9;font-size:0.85rem;'>Volatility</span>
+            <span class='signal-pill {vol_sig[1]}'>{vol_sig[0]}</span></div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Stats Card
     st.markdown(f"""
     <div class='card'>
         <div class='section-title'>📐 Statistics</div>
-        <div class='stat-row'>
-            <span class='stat-key'>Mean Price</span>
-            <span class='stat-value'>₹{df['Close'].mean():.2f}</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>Std Dev</span>
-            <span class='stat-value'>₹{df['Close'].std():.2f}</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>Best Day</span>
-            <span class='stat-value' style='color:#40a02b;'>+{df['Daily_Return'].max():.2f}%</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>Worst Day</span>
-            <span class='stat-value' style='color:#d20f39;'>{df['Daily_Return'].min():.2f}%</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>Max Drawdown</span>
-            <span class='stat-value' style='color:#d20f39;'>{max_dd:.2f}%</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>Avg Volume</span>
-            <span class='stat-value'>{df['Volume'].mean()/1e6:.1f}M</span>
-        </div>
-        <div class='stat-row'>
-            <span class='stat-key'>+ve Days</span>
-            <span class='stat-value'>{(df['Daily_Return']>0).mean()*100:.1f}%</span>
-        </div>
+        <div class='stat-row'><span class='stat-key'>Mean Price</span>
+            <span class='stat-value'>₹{df['Close'].mean():.2f}</span></div>
+        <div class='stat-row'><span class='stat-key'>Std Dev</span>
+            <span class='stat-value'>₹{df['Close'].std():.2f}</span></div>
+        <div class='stat-row'><span class='stat-key'>Best Day</span>
+            <span class='stat-value' style='color:#81c784;'>+{df['Daily_Return'].max():.2f}%</span></div>
+        <div class='stat-row'><span class='stat-key'>Worst Day</span>
+            <span class='stat-value' style='color:#e57373;'>{df['Daily_Return'].min():.2f}%</span></div>
+        <div class='stat-row'><span class='stat-key'>Max Drawdown</span>
+            <span class='stat-value' style='color:#e57373;'>{max_dd:.2f}%</span></div>
+        <div class='stat-row'><span class='stat-key'>Avg Volume</span>
+            <span class='stat-value'>{df['Volume'].mean()/1e6:.1f}M</span></div>
+        <div class='stat-row'><span class='stat-key'>+ve Days</span>
+            <span class='stat-value'>{(df['Daily_Return']>0).mean()*100:.1f}%</span></div>
     </div>
     """, unsafe_allow_html=True)
 
-    # Patterns Card
     total_patterns = int(df['Doji'].sum() + df['Hammer'].sum() +
                          df['Bullish_Engulfing'].sum() + df['Bearish_Engulfing'].sum())
     st.markdown(f"""
     <div class='card'>
         <div class='section-title'>🕯️ Patterns Found</div>
-        <div class='pattern-row'>
-            <span style='font-size:0.85rem;color:#1e1e2e;'>🟡 Doji</span>
-            <span style='font-weight:700;color:#df8e1d;'>{int(df['Doji'].sum())}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='font-size:0.85rem;color:#1e1e2e;'>🟢 Hammer</span>
-            <span style='font-weight:700;color:#40a02b;'>{int(df['Hammer'].sum())}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='font-size:0.85rem;color:#1e1e2e;'>🔴 Shoot. Star</span>
-            <span style='font-weight:700;color:#d20f39;'>{int(df['Shooting_Star'].sum())}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='font-size:0.85rem;color:#1e1e2e;'>🟢 Bull Engulf</span>
-            <span style='font-weight:700;color:#40a02b;'>{int(df['Bullish_Engulfing'].sum())}</span>
-        </div>
-        <div class='pattern-row'>
-            <span style='font-size:0.85rem;color:#1e1e2e;'>🔴 Bear Engulf</span>
-            <span style='font-weight:700;color:#d20f39;'>{int(df['Bearish_Engulfing'].sum())}</span>
-        </div>
-        <div style='margin-top:12px;padding-top:12px;border-top:2px solid #f0f2f5;
-        text-align:center;font-size:0.8rem;color:#9399b2;'>
-            {total_patterns} patterns in {len(df)} trading days
+        <div class='pattern-row'><span style='font-size:0.85rem;color:#ffffff;'>🟡 Doji</span>
+            <span style='font-weight:700;color:#fff176;'>{int(df['Doji'].sum())}</span></div>
+        <div class='pattern-row'><span style='font-size:0.85rem;color:#ffffff;'>🟢 Hammer</span>
+            <span style='font-weight:700;color:#81c784;'>{int(df['Hammer'].sum())}</span></div>
+        <div class='pattern-row'><span style='font-size:0.85rem;color:#ffffff;'>🔴 Shoot. Star</span>
+            <span style='font-weight:700;color:#e57373;'>{int(df['Shooting_Star'].sum())}</span></div>
+        <div class='pattern-row'><span style='font-size:0.85rem;color:#ffffff;'>🟢 Bull Engulf</span>
+            <span style='font-weight:700;color:#81c784;'>{int(df['Bullish_Engulfing'].sum())}</span></div>
+        <div class='pattern-row'><span style='font-size:0.85rem;color:#ffffff;'>🔴 Bear Engulf</span>
+            <span style='font-weight:700;color:#e57373;'>{int(df['Bearish_Engulfing'].sum())}</span></div>
+        <div style='margin-top:12px;padding-top:12px;border-top:2px solid #283593;
+        text-align:center;font-size:0.8rem;color:#90caf9;'>
+            {total_patterns} patterns · {len(df)} trading days
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-# ── Row 3: Distribution + Heatmap ─────────────────────────────
+# ── Distribution + Heatmap ─────────────────────────────────────
 dist_col, heat_col = st.columns([1, 2])
 
 with dist_col:
     st.markdown("<div class='card'>", unsafe_allow_html=True)
     st.markdown("<div class='section-title'>📊 Returns Distribution</div>", unsafe_allow_html=True)
     fig_ret = px.histogram(df['Daily_Return'].dropna(), nbins=50,
-                           color_discrete_sequence=['#1a73e8'])
-    fig_ret.update_layout(template='plotly_white', paper_bgcolor='white',
-                          plot_bgcolor='white', height=260,
+                           color_discrete_sequence=['#64b5f6'])
+    fig_ret.update_layout(template='plotly_dark', paper_bgcolor='#1e2a9a',
+                          plot_bgcolor='#1e2a9a', height=260,
                           showlegend=False, margin=dict(l=0,r=0,t=0,b=0),
-                          xaxis_title="Daily Return (%)", yaxis_title="Frequency")
-    fig_ret.update_xaxes(gridcolor='#f0f2f5')
-    fig_ret.update_yaxes(gridcolor='#f0f2f5')
+                          xaxis_title="Daily Return (%)", yaxis_title="Frequency",
+                          font=dict(color='#90caf9'))
+    fig_ret.update_xaxes(gridcolor='#283593')
+    fig_ret.update_yaxes(gridcolor='#283593')
     st.plotly_chart(fig_ret, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -630,14 +555,15 @@ with heat_col:
     monthly.columns = [month_names[m] for m in monthly.columns]
     fig_heat = px.imshow(monthly, color_continuous_scale='RdYlGn',
                          aspect='auto', text_auto='.1f')
-    fig_heat.update_layout(template='plotly_white', paper_bgcolor='white',
-                           plot_bgcolor='white', height=260,
+    fig_heat.update_layout(template='plotly_dark', paper_bgcolor='#1e2a9a',
+                           plot_bgcolor='#1e2a9a', height=260,
                            margin=dict(l=0,r=0,t=0,b=0),
+                           font=dict(color='#90caf9'),
                            coloraxis_showscale=False)
     st.plotly_chart(fig_heat, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ── Row 4: Volume + Volatility ─────────────────────────────────
+# ── Volume + Volatility ────────────────────────────────────────
 vol_col, vola_col = st.columns(2)
 
 with vol_col:
@@ -648,13 +574,14 @@ with vol_col:
     fig_v.add_trace(go.Bar(x=df.index, y=df['Volume'], name='Volume',
                            marker_color=vol_colors, opacity=0.5))
     fig_v.add_trace(go.Scatter(x=df.index, y=df['Vol_MA20'], name='MA 20',
-                               line=dict(color='#1a73e8', width=2)))
-    fig_v.update_layout(template='plotly_white', paper_bgcolor='white',
-                        plot_bgcolor='white', height=240,
+                               line=dict(color='#64b5f6', width=2)))
+    fig_v.update_layout(template='plotly_dark', paper_bgcolor='#1e2a9a',
+                        plot_bgcolor='#1e2a9a', height=240,
                         showlegend=True, margin=dict(l=0,r=0,t=0,b=0),
-                        legend=dict(orientation='h', y=1.1))
-    fig_v.update_xaxes(gridcolor='#f0f2f5')
-    fig_v.update_yaxes(gridcolor='#f0f2f5')
+                        font=dict(color='#90caf9'),
+                        legend=dict(orientation='h', y=1.1, bgcolor='rgba(0,0,0,0)'))
+    fig_v.update_xaxes(gridcolor='#283593')
+    fig_v.update_yaxes(gridcolor='#283593')
     st.plotly_chart(fig_v, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -663,20 +590,22 @@ with vola_col:
     st.markdown("<div class='section-title'>🌊 Rolling Volatility</div>", unsafe_allow_html=True)
     fig_vola = go.Figure()
     fig_vola.add_trace(go.Scatter(x=df.index, y=df['Volatility'], name='Volatility',
-                                   fill='tozeroy', fillcolor='rgba(142,89,239,0.1)',
-                                   line=dict(color='#8839ef', width=2)))
+                                   fill='tozeroy', fillcolor='rgba(206,147,216,0.15)',
+                                   line=dict(color='#ce93d8', width=2)))
     fig_vola.add_hline(y=df['Volatility'].mean(), line_dash='dash',
-                       line_color='#df8e1d', line_width=1.5,
-                       annotation_text="Mean", annotation_position="right")
-    fig_vola.update_layout(template='plotly_white', paper_bgcolor='white',
-                           plot_bgcolor='white', height=240,
-                           showlegend=False, margin=dict(l=0,r=0,t=0,b=0))
-    fig_vola.update_xaxes(gridcolor='#f0f2f5')
-    fig_vola.update_yaxes(gridcolor='#f0f2f5')
+                       line_color='#fff176', line_width=1.5,
+                       annotation_text="Mean", annotation_position="right",
+                       annotation_font_color='#fff176')
+    fig_vola.update_layout(template='plotly_dark', paper_bgcolor='#1e2a9a',
+                           plot_bgcolor='#1e2a9a', height=240,
+                           showlegend=False, margin=dict(l=0,r=0,t=0,b=0),
+                           font=dict(color='#90caf9'))
+    fig_vola.update_xaxes(gridcolor='#283593')
+    fig_vola.update_yaxes(gridcolor='#283593')
     st.plotly_chart(fig_vola, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ── Raw Data Explorer ──────────────────────────────────────────
+# ── Data Explorer ──────────────────────────────────────────────
 st.markdown("<div class='card'>", unsafe_allow_html=True)
 st.markdown("<div class='section-title'>📋 Data Explorer</div>", unsafe_allow_html=True)
 
@@ -690,20 +619,18 @@ with exp_c1:
 with exp_c2:
     n_rows = st.slider("Rows", 10, 100, 25)
 
-st.dataframe(
-    df[show_cols].tail(n_rows).round(2).sort_index(ascending=False),
-    use_container_width=True
-)
+st.dataframe(df[show_cols].tail(n_rows).round(2).sort_index(ascending=False),
+             use_container_width=True)
 st.markdown("</div>", unsafe_allow_html=True)
 
 # ── Footer ─────────────────────────────────────────────────────
 st.markdown(f"""
 <div class='footer-card'>
     <div>
-        <strong style='color:#cba6f7;font-size:1rem;'>🔭 StockLens</strong>
-        <span style='color:#6c7086;'> — HDFC Bank Analytics Platform</span>
+        <strong style='color:#90caf9;font-size:1rem;'>🔭 StockLens</strong>
+        <span style='color:#5c6bc0;'> — HDFC Bank Analytics Platform</span>
     </div>
-    <div style='color:#6c7086;'>
+    <div style='color:#5c6bc0;'>
         📡 NSE · Yahoo Finance &nbsp;|&nbsp;
         {len(df)} trading days &nbsp;|&nbsp;
         ⚠️ Educational purposes only
