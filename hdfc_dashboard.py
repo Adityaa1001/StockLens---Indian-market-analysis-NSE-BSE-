@@ -122,36 +122,36 @@ ALL_STOCKS = {**NSE_STOCKS, **BSE_STOCKS}
 BASE = os.path.dirname(os.path.abspath(__file__))
 
 TICKER_MAP = {
-    "HDFCBANK.NS":   os.path.join(BASE, "HDFCBANK.csv"),
-    "RELIANCE.NS":   os.path.join(BASE, "RELIANCE.csv"),
-    "TCS.NS":        os.path.join(BASE, "TCS.csv"),
-    "INFY.NS":       os.path.join(BASE, "INFY.csv"),
-    "ICICIBANK.NS":  os.path.join(BASE, "ICICIBANK.csv"),
-    "SBIN.NS":       os.path.join(BASE, "SBIN.csv"),
-    "WIPRO.NS":      os.path.join(BASE, "WIPRO.csv"),
-    "BHARTIARTL.NS": os.path.join(BASE, "BHARTIARTL.csv"),
-    "KOTAKBANK.NS":  os.path.join(BASE, "KOTAKBANK.csv"),
-    "AXISBANK.NS":   os.path.join(BASE, "AXISBANK.csv"),
-    "ITC.NS":        os.path.join(BASE, "ITC.csv"),
-    "MARUTI.NS":     os.path.join(BASE, "MARUTI.csv"),
-    "BAJFINANCE.NS": os.path.join(BASE, "BAJFINANCE.csv"),
-    "SUNPHARMA.NS":  os.path.join(BASE, "SUNPHARMA.csv"),
-    "TITAN.NS":      os.path.join(BASE, "TITAN.csv"),
-    "TATAMOTORS.NS": os.path.join(BASE, "TATAMOTORS.csv"),
-    "POWERGRID.NS":  os.path.join(BASE, "POWERGRID.csv"),
-    "ADANIPORTS.NS": os.path.join(BASE, "ADANIPORTS.csv"),
-    "ASIANPAINT.NS": os.path.join(BASE, "ASIANPAINT.csv"),
-    "ULTRACEMCO.NS": os.path.join(BASE, "ULTRACEMCO.csv"),
-    "HDFCBANK.BO":   os.path.join(BASE, "HDFCBANK.csv"),
-    "RELIANCE.BO":   os.path.join(BASE, "RELIANCE.csv"),
-    "TCS.BO":        os.path.join(BASE, "TCS.csv"),
-    "INFY.BO":       os.path.join(BASE, "INFY.csv"),
-    "ICICIBANK.BO":  os.path.join(BASE, "ICICIBANK.csv"),
-    "SBIN.BO":       os.path.join(BASE, "SBIN.csv"),
-    "WIPRO.BO":      os.path.join(BASE, "WIPRO.csv"),
-    "ITC.BO":        os.path.join(BASE, "ITC.csv"),
-    "MARUTI.BO":     os.path.join(BASE, "MARUTI.csv"),
-    "SUNPHARMA.BO":  os.path.join(BASE, "SUNPHARMA.csv"),
+    "HDFCBANK.NS":   os.path.join(BASE, "stock_data", "HDFCBANK.csv"),
+    "RELIANCE.NS":   os.path.join(BASE, "stock_data", "RELIANCE.csv"),
+    "TCS.NS":        os.path.join(BASE, "stock_data", "TCS.csv"),
+    "INFY.NS":       os.path.join(BASE, "stock_data", "INFY.csv"),
+    "ICICIBANK.NS":  os.path.join(BASE, "stock_data", "ICICIBANK.csv"),
+    "SBIN.NS":       os.path.join(BASE, "stock_data", "SBIN.csv"),
+    "WIPRO.NS":      os.path.join(BASE, "stock_data", "WIPRO.csv"),
+    "BHARTIARTL.NS": os.path.join(BASE, "stock_data", "BHARTIARTL.csv"),
+    "KOTAKBANK.NS":  os.path.join(BASE, "stock_data", "KOTAKBANK.csv"),
+    "AXISBANK.NS":   os.path.join(BASE, "stock_data", "AXISBANK.csv"),
+    "ITC.NS":        os.path.join(BASE, "stock_data", "ITC.csv"),
+    "MARUTI.NS":     os.path.join(BASE, "stock_data", "MARUTI.csv"),
+    "BAJFINANCE.NS": os.path.join(BASE, "stock_data", "BAJFINANCE.csv"),
+    "SUNPHARMA.NS":  os.path.join(BASE, "stock_data", "SUNPHARMA.csv"),
+    "TITAN.NS":      os.path.join(BASE, "stock_data", "TITAN.csv"),
+    "TATAMOTORS.NS": os.path.join(BASE, "stock_data", "TATAMOTORS.csv"),
+    "POWERGRID.NS":  os.path.join(BASE, "stock_data", "POWERGRID.csv"),
+    "ADANIPORTS.NS": os.path.join(BASE, "stock_data", "ADANIPORTS.csv"),
+    "ASIANPAINT.NS": os.path.join(BASE, "stock_data", "ASIANPAINT.csv"),
+    "ULTRACEMCO.NS": os.path.join(BASE, "stock_data", "ULTRACEMCO.csv"),
+    "HDFCBANK.BO":   os.path.join(BASE, "stock_data", "HDFCBANK.csv"),
+    "RELIANCE.BO":   os.path.join(BASE, "stock_data", "RELIANCE.csv"),
+    "TCS.BO":        os.path.join(BASE, "stock_data", "TCS.csv"),
+    "INFY.BO":       os.path.join(BASE, "stock_data", "INFY.csv"),
+    "ICICIBANK.BO":  os.path.join(BASE, "stock_data", "ICICIBANK.csv"),
+    "SBIN.BO":       os.path.join(BASE, "stock_data", "SBIN.csv"),
+    "WIPRO.BO":      os.path.join(BASE, "stock_data", "WIPRO.csv"),
+    "ITC.BO":        os.path.join(BASE, "stock_data", "ITC.csv"),
+    "MARUTI.BO":     os.path.join(BASE, "stock_data", "MARUTI.csv"),
+    "SUNPHARMA.BO":  os.path.join(BASE, "stock_data", "SUNPHARMA.csv"),
 }
 
 # ── Helpers ────────────────────────────────────────────────────
@@ -318,12 +318,14 @@ with st.sidebar:
     end   = st.date_input("To",   pd.to_datetime("2025-03-21"))
 
     st.markdown("**⚙️ Settings**")
-    chart_type    = st.selectbox("Chart", ["Candlestick","Line","OHLC"])
-    show_sma      = st.checkbox("SMA Lines",       value=True)
-    show_ema      = st.checkbox("EMA 20",          value=False)
-    show_bb       = st.checkbox("Bollinger Bands", value=True)
-    show_vwap     = st.checkbox("VWAP",            value=False)
-    show_patterns = st.checkbox("Patterns on Chart", value=True)
+    chart_type    = st.selectbox("Chart", ["Line","Candlestick","OHLC"])
+    show_kpi      = st.checkbox("Show KPI Cards",     value=False)
+    show_signals  = st.checkbox("Show Trade Signals", value=False)
+    show_sma      = st.checkbox("SMA Lines",          value=True)
+    show_ema      = st.checkbox("EMA 20",             value=False)
+    show_bb       = st.checkbox("Bollinger Bands",    value=True)
+    show_vwap     = st.checkbox("VWAP",               value=False)
+    show_patterns = st.checkbox("Patterns on Chart",  value=True)
     rsi_p = st.slider("RSI Period", 7, 28, 14)
     bb_p  = st.slider("BB Period",  10, 50, 20)
 
@@ -393,61 +395,66 @@ if page == "📊 Dashboard":
     </div>
     """, unsafe_allow_html=True)
 
-    # KPI Cards
-    k1,k2,k3,k4,k5,k6 = st.columns(6)
-    kpis = [
-        (k1, f"₹{cur:,.2f}",      "Current Price", f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}%",   "#4caf50" if chg>=0 else "#f44336", "#1565c0"),
-        (k2, f"₹{hi52:,.2f}",     "52W High",      f"{((cur/hi52)-1)*100:.1f}% from high",       "#f44336", "#e53935"),
-        (k3, f"₹{lo52:,.2f}",     "52W Low",       f"{((cur/lo52)-1)*100:.1f}% above low",       "#4caf50", "#43a047"),
-        (k4, f"{rsi:.1f}",        "RSI (14)",      "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", "#4caf50" if rsi<=70 else "#f44336", "#7b1fa2"),
-        (k5, f"{ret:.1f}%",       "Total Return",  f"Since {df.index[0].strftime('%b %Y')}",     "#4caf50" if ret>0 else "#f44336", "#0288d1"),
-        (k6, f"{sh:.2f}",         "Sharpe Ratio",  "Risk-adjusted return",                       "#4caf50" if sh>1 else "#ff9800", "#00796b"),
-    ]
-    for col, val, label, sub, sub_color, border in kpis:
-        col.markdown(f"""
-        <div class='card' style='border-left-color:{border};'>
-            <div class='kpi-val'>{val}</div>
-            <div class='kpi-label'>{label}</div>
-            <div class='kpi-sub' style='color:{sub_color};'>{sub}</div>
-        </div>""", unsafe_allow_html=True)
+    # KPI Cards (optional)
+    if show_kpi:
+        k1,k2,k3,k4,k5,k6 = st.columns(6)
+        kpis = [
+            (k1, f"₹{cur:,.2f}",      "Current Price", f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}%",   "#4caf50" if chg>=0 else "#f44336", "#1565c0"),
+            (k2, f"₹{hi52:,.2f}",     "52W High",      f"{((cur/hi52)-1)*100:.1f}% from high",       "#f44336", "#e53935"),
+            (k3, f"₹{lo52:,.2f}",     "52W Low",       f"{((cur/lo52)-1)*100:.1f}% above low",       "#4caf50", "#43a047"),
+            (k4, f"{rsi:.1f}",        "RSI (14)",      "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", "#4caf50" if rsi<=70 else "#f44336", "#7b1fa2"),
+            (k5, f"{ret:.1f}%",       "Total Return",  f"Since {df.index[0].strftime('%b %Y')}",     "#4caf50" if ret>0 else "#f44336", "#0288d1"),
+            (k6, f"{sh:.2f}",         "Sharpe Ratio",  "Risk-adjusted return",                       "#4caf50" if sh>1 else "#ff9800", "#00796b"),
+        ]
+        for col, val, label, sub, sub_color, border in kpis:
+            col.markdown(f"""
+            <div class='card' style='border-left-color:{border};'>
+                <div class='kpi-val'>{val}</div>
+                <div class='kpi-label'>{label}</div>
+                <div class='kpi-sub' style='color:{sub_color};'>{sub}</div>
+            </div>""", unsafe_allow_html=True)
 
-    # Signals
-    st.markdown("<div class='sec-title'>🚦 Technical Signals</div>",
-                unsafe_allow_html=True)
-    rsi_s  = ("BUY","buy")   if rsi<30  else ("SELL","sell") if rsi>70 else ("HOLD","hold")
-    macd_s = ("BUY","buy")   if macd>0  else ("SELL","sell")
-    sma_s  = ("BUY","buy")   if cur>float(df['SMA_200'].iloc[-1]) else ("SELL","sell")
-    bb_lo  = float(df['BB_Lower'].iloc[-1])
-    bb_hi  = float(df['BB_Upper'].iloc[-1])
-    bb_pct = (cur - bb_lo) / (bb_hi - bb_lo)
-    bb_s   = ("BUY","buy")   if bb_pct<0.2 else ("SELL","sell") if bb_pct>0.8 else ("HOLD","hold")
-    buy_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="BUY")
-    sel_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="SELL")
-    ov_s   = ("BUY","buy") if buy_ct>=3 else ("SELL","sell") if sel_ct>=3 else ("HOLD","hold")
+    # Signals (optional)
+    if show_signals:
+        st.markdown("<div class='sec-title'>🚦 Technical Signals</div>",
+                    unsafe_allow_html=True)
+        rsi_s  = ("BUY","buy")   if rsi<30  else ("SELL","sell") if rsi>70 else ("HOLD","hold")
+        macd_s = ("BUY","buy")   if macd>0  else ("SELL","sell")
+        sma_s  = ("BUY","buy")   if cur>float(df['SMA_200'].iloc[-1]) else ("SELL","sell")
+        bb_lo  = float(df['BB_Lower'].iloc[-1])
+        bb_hi  = float(df['BB_Upper'].iloc[-1])
+        bb_pct = (cur - bb_lo) / (bb_hi - bb_lo)
+        bb_s   = ("BUY","buy")   if bb_pct<0.2 else ("SELL","sell") if bb_pct>0.8 else ("HOLD","hold")
+        buy_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="BUY")
+        sel_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="SELL")
+        ov_s   = ("BUY","buy") if buy_ct>=3 else ("SELL","sell") if sel_ct>=3 else ("HOLD","hold")
 
-    sg1,sg2,sg3,sg4,sg5 = st.columns(5)
-    for col, label, sig in [
-        (sg1, f"RSI ({rsi:.0f})",  rsi_s),
-        (sg2, "MACD",             macd_s),
-        (sg3, "SMA 200",          sma_s),
-        (sg4, "Bollinger",        bb_s),
-        (sg5, "Overall Signal",   ov_s),
-    ]:
-        col.markdown(f"""
-        <div style='background:white;border-radius:12px;padding:14px;
-        text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06);'>
-            <div style='font-size:0.78rem;color:#888;margin-bottom:8px;'>{label}</div>
-            <span class='pill {sig[1]}'>{sig[0]}</span>
-        </div>""", unsafe_allow_html=True)
-
-    st.markdown("<br>", unsafe_allow_html=True)
+        sg1,sg2,sg3,sg4,sg5 = st.columns(5)
+        for col, label, sig in [
+            (sg1, f"RSI ({rsi:.0f})",  rsi_s),
+            (sg2, "MACD",             macd_s),
+            (sg3, "SMA 200",          sma_s),
+            (sg4, "Bollinger",        bb_s),
+            (sg5, "Overall Signal",   ov_s),
+        ]:
+            col.markdown(f"""
+            <div style='background:white;border-radius:12px;padding:14px;
+            text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06);'>
+                <div style='font-size:0.78rem;color:#888;margin-bottom:8px;'>{label}</div>
+                <span class='pill {sig[1]}'>{sig[0]}</span>
+            </div>""", unsafe_allow_html=True)
+        st.markdown("<br>", unsafe_allow_html=True)
 
     # Main Chart
     st.markdown("<div class='sec-title'>💹 Price Chart</div>",
                 unsafe_allow_html=True)
 
-    fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
-                        row_heights=[0.6,0.2,0.2], vertical_spacing=0.02)
+    fig = make_subplots(
+        rows=3, cols=1, shared_xaxes=True,
+        row_heights=[0.65, 0.18, 0.17],
+        vertical_spacing=0.04,
+        subplot_titles=("", "Volume", "RSI")
+    )
 
     if chart_type == "Candlestick":
         fig.add_trace(go.Candlestick(
@@ -524,7 +531,27 @@ if page == "📊 Dashboard":
     fig.add_hline(y=30, line_dash='dash',
                   line_color='#4caf50', line_width=1, row=3, col=1)
 
-    plot_cfg(fig, h=580)
+    fig.update_layout(
+        height=700,
+        template='plotly_white',
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+        font=dict(family='Inter', color='#1a1a2e', size=11),
+        margin=dict(l=10, r=10, t=20, b=10),
+        legend=dict(orientation='h', y=1.04,
+                    bgcolor='rgba(0,0,0,0)', font=dict(size=11)),
+        xaxis_rangeslider_visible=False,
+        xaxis3=dict(showticklabels=True),
+    )
+    # Horizontal dividers between panels
+    fig.update_xaxes(gridcolor='#f0f0f0', showline=True,
+                     linecolor='#e0e0e0', linewidth=1)
+    fig.update_yaxes(gridcolor='#f0f0f0', showline=True,
+                     linecolor='#e0e0e0', linewidth=1)
+    # Volume panel: clean y-axis labels
+    fig.update_yaxes(tickformat='.2s', row=2, col=1)
+    # RSI panel: fix range
+    fig.update_yaxes(range=[0, 100], row=3, col=1)
     st.plotly_chart(fig, use_container_width=True)
 
     # Stats + MACD
