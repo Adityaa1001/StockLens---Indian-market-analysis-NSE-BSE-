@@ -166,6 +166,7 @@ def get_indices():
 
 @st.cache_data(ttl=3600)
 def fetch(ticker, start, end):
+    # Load from CSV if available
     if ticker in TICKER_MAP:
         csv_path = TICKER_MAP[ticker]
         try:
@@ -180,6 +181,7 @@ def fetch(ticker, start, end):
         except Exception:
             pass
 
+    # Fallback to live fetch for custom tickers
     try:
         df = yf.download(ticker, start=str(start), end=str(end),
                          auto_adjust=True, progress=False)
@@ -298,6 +300,8 @@ with st.sidebar:
 
     page = st.radio("📌 Navigate", [
         "📊 Dashboard",
+        "🔍 Screener",
+        "⚖️ Compare",
         "💼 Portfolio"
     ])
 
@@ -318,14 +322,12 @@ with st.sidebar:
     end   = st.date_input("To",   pd.to_datetime("2025-03-21"))
 
     st.markdown("**⚙️ Settings**")
-    chart_type    = st.selectbox("Chart", ["Line","Candlestick","OHLC"])
-    show_kpi      = st.checkbox("Show KPI Cards",     value=False)
-    show_signals  = st.checkbox("Show Trade Signals", value=False)
-    show_sma      = st.checkbox("SMA Lines",          value=True)
-    show_ema      = st.checkbox("EMA 20",             value=False)
-    show_bb       = st.checkbox("Bollinger Bands",    value=True)
-    show_vwap     = st.checkbox("VWAP",               value=False)
-    show_patterns = st.checkbox("Patterns on Chart",  value=True)
+    chart_type    = st.selectbox("Chart", ["Candlestick","Line","OHLC"])
+    show_sma      = st.checkbox("SMA Lines",       value=True)
+    show_ema      = st.checkbox("EMA 20",          value=False)
+    show_bb       = st.checkbox("Bollinger Bands", value=True)
+    show_vwap     = st.checkbox("VWAP",            value=False)
+    show_patterns = st.checkbox("Patterns on Chart", value=True)
     rsi_p = st.slider("RSI Period", 7, 28, 14)
     bb_p  = st.slider("BB Period",  10, 50, 20)
 
@@ -395,66 +397,61 @@ if page == "📊 Dashboard":
     </div>
     """, unsafe_allow_html=True)
 
-    # KPI Cards (optional)
-    if show_kpi:
-        k1,k2,k3,k4,k5,k6 = st.columns(6)
-        kpis = [
-            (k1, f"₹{cur:,.2f}",      "Current Price", f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}%",   "#4caf50" if chg>=0 else "#f44336", "#1565c0"),
-            (k2, f"₹{hi52:,.2f}",     "52W High",      f"{((cur/hi52)-1)*100:.1f}% from high",       "#f44336", "#e53935"),
-            (k3, f"₹{lo52:,.2f}",     "52W Low",       f"{((cur/lo52)-1)*100:.1f}% above low",       "#4caf50", "#43a047"),
-            (k4, f"{rsi:.1f}",        "RSI (14)",      "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", "#4caf50" if rsi<=70 else "#f44336", "#7b1fa2"),
-            (k5, f"{ret:.1f}%",       "Total Return",  f"Since {df.index[0].strftime('%b %Y')}",     "#4caf50" if ret>0 else "#f44336", "#0288d1"),
-            (k6, f"{sh:.2f}",         "Sharpe Ratio",  "Risk-adjusted return",                       "#4caf50" if sh>1 else "#ff9800", "#00796b"),
-        ]
-        for col, val, label, sub, sub_color, border in kpis:
-            col.markdown(f"""
-            <div class='card' style='border-left-color:{border};'>
-                <div class='kpi-val'>{val}</div>
-                <div class='kpi-label'>{label}</div>
-                <div class='kpi-sub' style='color:{sub_color};'>{sub}</div>
-            </div>""", unsafe_allow_html=True)
+    # KPI Cards
+    k1,k2,k3,k4,k5,k6 = st.columns(6)
+    kpis = [
+        (k1, f"₹{cur:,.2f}",      "Current Price", f"{'▲' if chg>=0 else '▼'} {chgp:+.2f}%",   "#4caf50" if chg>=0 else "#f44336", "#1565c0"),
+        (k2, f"₹{hi52:,.2f}",     "52W High",      f"{((cur/hi52)-1)*100:.1f}% from high",       "#f44336", "#e53935"),
+        (k3, f"₹{lo52:,.2f}",     "52W Low",       f"{((cur/lo52)-1)*100:.1f}% above low",       "#4caf50", "#43a047"),
+        (k4, f"{rsi:.1f}",        "RSI (14)",      "Overbought" if rsi>70 else "Oversold" if rsi<30 else "Neutral", "#4caf50" if rsi<=70 else "#f44336", "#7b1fa2"),
+        (k5, f"{ret:.1f}%",       "Total Return",  f"Since {df.index[0].strftime('%b %Y')}",     "#4caf50" if ret>0 else "#f44336", "#0288d1"),
+        (k6, f"{sh:.2f}",         "Sharpe Ratio",  "Risk-adjusted return",                       "#4caf50" if sh>1 else "#ff9800", "#00796b"),
+    ]
+    for col, val, label, sub, sub_color, border in kpis:
+        col.markdown(f"""
+        <div class='card' style='border-left-color:{border};'>
+            <div class='kpi-val'>{val}</div>
+            <div class='kpi-label'>{label}</div>
+            <div class='kpi-sub' style='color:{sub_color};'>{sub}</div>
+        </div>""", unsafe_allow_html=True)
 
-    # Signals (optional)
-    if show_signals:
-        st.markdown("<div class='sec-title'>🚦 Technical Signals</div>",
-                    unsafe_allow_html=True)
-        rsi_s  = ("BUY","buy")   if rsi<30  else ("SELL","sell") if rsi>70 else ("HOLD","hold")
-        macd_s = ("BUY","buy")   if macd>0  else ("SELL","sell")
-        sma_s  = ("BUY","buy")   if cur>float(df['SMA_200'].iloc[-1]) else ("SELL","sell")
-        bb_lo  = float(df['BB_Lower'].iloc[-1])
-        bb_hi  = float(df['BB_Upper'].iloc[-1])
-        bb_pct = (cur - bb_lo) / (bb_hi - bb_lo)
-        bb_s   = ("BUY","buy")   if bb_pct<0.2 else ("SELL","sell") if bb_pct>0.8 else ("HOLD","hold")
-        buy_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="BUY")
-        sel_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="SELL")
-        ov_s   = ("BUY","buy") if buy_ct>=3 else ("SELL","sell") if sel_ct>=3 else ("HOLD","hold")
+    # Signals
+    st.markdown("<div class='sec-title'>🚦 Technical Signals</div>",
+                unsafe_allow_html=True)
+    rsi_s  = ("BUY","buy")   if rsi<30  else ("SELL","sell") if rsi>70 else ("HOLD","hold")
+    macd_s = ("BUY","buy")   if macd>0  else ("SELL","sell")
+    sma_s  = ("BUY","buy")   if cur>float(df['SMA_200'].iloc[-1]) else ("SELL","sell")
+    bb_lo  = float(df['BB_Lower'].iloc[-1])
+    bb_hi  = float(df['BB_Upper'].iloc[-1])
+    bb_pct = (cur - bb_lo) / (bb_hi - bb_lo)
+    bb_s   = ("BUY","buy")   if bb_pct<0.2 else ("SELL","sell") if bb_pct>0.8 else ("HOLD","hold")
+    buy_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="BUY")
+    sel_ct = sum(1 for s in [rsi_s,macd_s,sma_s,bb_s] if s[0]=="SELL")
+    ov_s   = ("BUY","buy") if buy_ct>=3 else ("SELL","sell") if sel_ct>=3 else ("HOLD","hold")
 
-        sg1,sg2,sg3,sg4,sg5 = st.columns(5)
-        for col, label, sig in [
-            (sg1, f"RSI ({rsi:.0f})",  rsi_s),
-            (sg2, "MACD",             macd_s),
-            (sg3, "SMA 200",          sma_s),
-            (sg4, "Bollinger",        bb_s),
-            (sg5, "Overall Signal",   ov_s),
-        ]:
-            col.markdown(f"""
-            <div style='background:white;border-radius:12px;padding:14px;
-            text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06);'>
-                <div style='font-size:0.78rem;color:#888;margin-bottom:8px;'>{label}</div>
-                <span class='pill {sig[1]}'>{sig[0]}</span>
-            </div>""", unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
+    sg1,sg2,sg3,sg4,sg5 = st.columns(5)
+    for col, label, sig in [
+        (sg1, f"RSI ({rsi:.0f})",  rsi_s),
+        (sg2, "MACD",             macd_s),
+        (sg3, "SMA 200",          sma_s),
+        (sg4, "Bollinger",        bb_s),
+        (sg5, "Overall Signal",   ov_s),
+    ]:
+        col.markdown(f"""
+        <div style='background:white;border-radius:12px;padding:14px;
+        text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06);'>
+            <div style='font-size:0.78rem;color:#888;margin-bottom:8px;'>{label}</div>
+            <span class='pill {sig[1]}'>{sig[0]}</span>
+        </div>""", unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
 
     # Main Chart
     st.markdown("<div class='sec-title'>💹 Price Chart</div>",
                 unsafe_allow_html=True)
 
-    fig = make_subplots(
-        rows=3, cols=1, shared_xaxes=True,
-        row_heights=[0.65, 0.18, 0.17],
-        vertical_spacing=0.04,
-        subplot_titles=("", "Volume", "RSI")
-    )
+    fig = make_subplots(rows=3, cols=1, shared_xaxes=True,
+                        row_heights=[0.6,0.2,0.2], vertical_spacing=0.02)
 
     if chart_type == "Candlestick":
         fig.add_trace(go.Candlestick(
@@ -531,27 +528,7 @@ if page == "📊 Dashboard":
     fig.add_hline(y=30, line_dash='dash',
                   line_color='#4caf50', line_width=1, row=3, col=1)
 
-    fig.update_layout(
-        height=700,
-        template='plotly_white',
-        paper_bgcolor='white',
-        plot_bgcolor='white',
-        font=dict(family='Inter', color='#1a1a2e', size=11),
-        margin=dict(l=10, r=10, t=20, b=10),
-        legend=dict(orientation='h', y=1.04,
-                    bgcolor='rgba(0,0,0,0)', font=dict(size=11)),
-        xaxis_rangeslider_visible=False,
-        xaxis3=dict(showticklabels=True),
-    )
-    # Horizontal dividers between panels
-    fig.update_xaxes(gridcolor='#f0f0f0', showline=True,
-                     linecolor='#e0e0e0', linewidth=1)
-    fig.update_yaxes(gridcolor='#f0f0f0', showline=True,
-                     linecolor='#e0e0e0', linewidth=1)
-    # Volume panel: clean y-axis labels
-    fig.update_yaxes(tickformat='.2s', row=2, col=1)
-    # RSI panel: fix range
-    fig.update_yaxes(range=[0, 100], row=3, col=1)
+    plot_cfg(fig, h=580)
     st.plotly_chart(fig, use_container_width=True)
 
     # Stats + MACD
@@ -663,6 +640,187 @@ if page == "📊 Dashboard":
         df[sel_cols].tail(n).round(2).sort_index(ascending=False),
         use_container_width=True
     )
+
+# ══════════════════════════════════════════════════════════════
+# SCREENER
+# ══════════════════════════════════════════════════════════════
+elif page == "🔍 Screener":
+    st.markdown("""
+    <div style='font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:4px;'>
+    🔍 Stock Screener</div>
+    <div style='color:#888;margin-bottom:20px;'>
+    Filter NSE stocks by technical criteria</div>
+    """, unsafe_allow_html=True)
+
+    f1,f2,f3,f4 = st.columns(4)
+    with f1:
+        rsi_min = st.slider("RSI Min", 0, 100, 0)
+        rsi_max = st.slider("RSI Max", 0, 100, 100)
+    with f2:
+        ret_min = st.slider("Return % Min", -100, 300, -100)
+        ret_max = st.slider("Return % Max", -100, 300, 300)
+    with f3:
+        trend_f = st.selectbox("Trend Filter",
+                               ["All","Above SMA200","Below SMA200"])
+        macd_f  = st.selectbox("MACD Filter",
+                               ["All","Bullish","Bearish"])
+    with f4:
+        st.markdown("<br><br><br>", unsafe_allow_html=True)
+        run = st.button("🔍 Run Screener",
+                        use_container_width=True, type="primary")
+
+    if run:
+        results = []
+        bar = st.progress(0)
+        items_list = list(NSE_STOCKS.items())
+        for i, (nm, tk) in enumerate(items_list):
+            bar.progress((i+1)/len(items_list), text=f"Scanning {nm}...")
+            try:
+                r = fetch(tk, start, end)
+                if r.empty or len(r) < 50:
+                    continue
+                d   = add_indicators(r)
+                cp  = float(d['Close'].iloc[-1])
+                rv  = float(d['RSI'].iloc[-1])
+                mv  = float(d['MACD'].iloc[-1])
+                ret = ((cp / float(d['Close'].iloc[0])) - 1) * 100
+                s2  = float(d['SMA_200'].iloc[-1])
+                if not (rsi_min<=rv<=rsi_max): continue
+                if not (ret_min<=ret<=ret_max): continue
+                if trend_f=="Above SMA200" and cp<=s2: continue
+                if trend_f=="Below SMA200" and cp>=s2: continue
+                if macd_f=="Bullish" and mv<=0: continue
+                if macd_f=="Bearish" and mv>=0: continue
+                sig = ("BUY","buy")   if rv<40 and mv>0 \
+                 else ("SELL","sell") if rv>60 and mv<0 \
+                 else ("HOLD","hold")
+                results.append(dict(name=nm, ticker=tk, price=cp,
+                                    rsi=rv, macd=mv, ret=ret, sig=sig))
+            except Exception:
+                continue
+        bar.empty()
+
+        if results:
+            st.success(f"✅ {len(results)} stocks matched your criteria")
+            for r in results:
+                rc = "#4caf50" if r['ret']>=0 else "#f44336"
+                st.markdown(f"""
+                <div class='scr-row'>
+                    <div style='flex:2;'>
+                        <div style='font-weight:700;color:#1a1a2e;'>{r['name']}</div>
+                        <div style='color:#888;font-size:0.75rem;'>{r['ticker']}</div>
+                    </div>
+                    <div style='flex:1;text-align:center;font-weight:700;color:#1a1a2e;'>
+                        ₹{r['price']:,.2f}
+                    </div>
+                    <div style='flex:1;text-align:center;color:#555;'>
+                        RSI: {r['rsi']:.1f}
+                    </div>
+                    <div style='flex:1;text-align:center;font-weight:600;color:{rc};'>
+                        {"+" if r['ret']>=0 else ""}{r['ret']:.1f}%
+                    </div>
+                    <div style='flex:1;text-align:right;'>
+                        <span class='pill {r["sig"][1]}'>{r["sig"][0]}</span>
+                    </div>
+                </div>""", unsafe_allow_html=True)
+        else:
+            st.warning("No stocks matched. Try widening your filters.")
+
+# ══════════════════════════════════════════════════════════════
+# COMPARE
+# ══════════════════════════════════════════════════════════════
+elif page == "⚖️ Compare":
+    st.markdown("""
+    <div style='font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:4px;'>
+    ⚖️ Stock Comparison</div>
+    <div style='color:#888;margin-bottom:20px;'>
+    Compare two stocks side by side</div>
+    """, unsafe_allow_html=True)
+
+    c1, c2 = st.columns(2)
+    with c1:
+        n1 = st.selectbox("Stock 1", list(NSE_STOCKS.keys()), index=0)
+        t1 = NSE_STOCKS[n1]
+    with c2:
+        n2 = st.selectbox("Stock 2", list(NSE_STOCKS.keys()), index=1)
+        t2 = NSE_STOCKS[n2]
+
+    with st.spinner("Loading..."):
+        r1 = fetch(t1, start, end)
+        r2 = fetch(t2, start, end)
+
+    if r1.empty or r2.empty:
+        st.error("Could not load one or both stocks.")
+        st.stop()
+
+    d1 = add_indicators(r1)
+    d2 = add_indicators(r2)
+
+    norm1 = (d1['Close'] / float(d1['Close'].iloc[0])) * 100
+    norm2 = (d2['Close'] / float(d2['Close'].iloc[0])) * 100
+    fig_n = go.Figure()
+    fig_n.add_trace(go.Scatter(x=d1.index, y=norm1, name=n1,
+                               line=dict(color='#1565c0', width=2)))
+    fig_n.add_trace(go.Scatter(x=d2.index, y=norm2, name=n2,
+                               line=dict(color='#f44336', width=2)))
+    plot_cfg(fig_n, h=360, title="Normalised Performance (Base 100)")
+    st.plotly_chart(fig_n, use_container_width=True)
+
+    m1, m2 = st.columns(2)
+    def make_stat(d, nm):
+        cp  = float(d['Close'].iloc[-1])
+        ret = ((cp/float(d['Close'].iloc[0]))-1)*100
+        rv  = float(d['RSI'].iloc[-1])
+        sh  = d['Daily_Return'].mean()/d['Daily_Return'].std()*np.sqrt(252)
+        ddv = ((d['Close']/d['Close'].cummax())-1).min()*100
+        vv  = float(d['Volatility'].iloc[-1])
+        rc  = "#4caf50" if ret>=0 else "#f44336"
+        html = f"""
+        <div style='background:white;border-radius:14px;padding:20px;
+        box-shadow:0 1px 4px rgba(0,0,0,0.07);'>
+        <div style='font-size:1rem;font-weight:700;color:#1a1a2e;
+        margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #f0f0f0;'>
+        {nm}</div>"""
+        for k, v, vc2 in [
+            ("Price",      f"₹{cp:,.2f}",  "#1a1a2e"),
+            ("Return",     f"{'+'if ret>=0 else ''}{ret:.2f}%", rc),
+            ("RSI",        f"{rv:.1f}",     "#1a1a2e"),
+            ("Sharpe",     f"{sh:.2f}",     "#1a1a2e"),
+            ("Max DD",     f"{ddv:.2f}%",   "#f44336"),
+            ("Volatility", f"{vv:.2f}%",    "#1a1a2e"),
+            ("Best Day",   f"+{d['Daily_Return'].max():.2f}%", "#4caf50"),
+            ("Worst Day",  f"{d['Daily_Return'].min():.2f}%",  "#f44336"),
+        ]:
+            html += f"""<div class='stat-row'>
+            <span class='sk'>{k}</span>
+            <span class='sv' style='color:{vc2};'>{v}</span></div>"""
+        html += "</div>"
+        return html
+
+    m1.markdown(make_stat(d1, n1), unsafe_allow_html=True)
+    m2.markdown(make_stat(d2, n2), unsafe_allow_html=True)
+
+    fig_r2 = go.Figure()
+    fig_r2.add_trace(go.Scatter(x=d1.index, y=d1['RSI'], name=n1,
+                                line=dict(color='#1565c0', width=1.5)))
+    fig_r2.add_trace(go.Scatter(x=d2.index, y=d2['RSI'], name=n2,
+                                line=dict(color='#f44336', width=1.5)))
+    fig_r2.add_hline(y=70, line_dash='dash', line_color='#f44336', line_width=1)
+    fig_r2.add_hline(y=30, line_dash='dash', line_color='#4caf50', line_width=1)
+    plot_cfg(fig_r2, h=260, title="RSI Comparison")
+    fig_r2.update_yaxes(range=[0,100])
+    st.plotly_chart(fig_r2, use_container_width=True)
+
+    comb = pd.DataFrame({
+        n1: d1['Daily_Return'],
+        n2: d2['Daily_Return']
+    }).dropna()
+    corr = comb.corr().iloc[0,1]
+    fig_c = px.scatter(comb, x=n1, y=n2, trendline="ols",
+                       title=f"Return Correlation: {corr:.3f}",
+                       color_discrete_sequence=['#1565c0'])
+    plot_cfg(fig_c, h=300)
+    st.plotly_chart(fig_c, use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════
 # PORTFOLIO
