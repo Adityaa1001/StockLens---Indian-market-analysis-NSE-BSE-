@@ -166,7 +166,6 @@ def get_indices():
 
 @st.cache_data(ttl=3600)
 def fetch(ticker, start, end):
-    # Load from CSV if available
     if ticker in TICKER_MAP:
         csv_path = TICKER_MAP[ticker]
         try:
@@ -181,7 +180,6 @@ def fetch(ticker, start, end):
         except Exception:
             pass
 
-    # Fallback to live fetch for custom tickers
     try:
         df = yf.download(ticker, start=str(start), end=str(end),
                          auto_adjust=True, progress=False)
@@ -300,8 +298,6 @@ with st.sidebar:
 
     page = st.radio("📌 Navigate", [
         "📊 Dashboard",
-        "🔍 Screener",
-        "⚖️ Compare",
         "💼 Portfolio"
     ])
 
@@ -640,187 +636,6 @@ if page == "📊 Dashboard":
         df[sel_cols].tail(n).round(2).sort_index(ascending=False),
         use_container_width=True
     )
-
-# ══════════════════════════════════════════════════════════════
-# SCREENER
-# ══════════════════════════════════════════════════════════════
-elif page == "🔍 Screener":
-    st.markdown("""
-    <div style='font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:4px;'>
-    🔍 Stock Screener</div>
-    <div style='color:#888;margin-bottom:20px;'>
-    Filter NSE stocks by technical criteria</div>
-    """, unsafe_allow_html=True)
-
-    f1,f2,f3,f4 = st.columns(4)
-    with f1:
-        rsi_min = st.slider("RSI Min", 0, 100, 0)
-        rsi_max = st.slider("RSI Max", 0, 100, 100)
-    with f2:
-        ret_min = st.slider("Return % Min", -100, 300, -100)
-        ret_max = st.slider("Return % Max", -100, 300, 300)
-    with f3:
-        trend_f = st.selectbox("Trend Filter",
-                               ["All","Above SMA200","Below SMA200"])
-        macd_f  = st.selectbox("MACD Filter",
-                               ["All","Bullish","Bearish"])
-    with f4:
-        st.markdown("<br><br><br>", unsafe_allow_html=True)
-        run = st.button("🔍 Run Screener",
-                        use_container_width=True, type="primary")
-
-    if run:
-        results = []
-        bar = st.progress(0)
-        items_list = list(NSE_STOCKS.items())
-        for i, (nm, tk) in enumerate(items_list):
-            bar.progress((i+1)/len(items_list), text=f"Scanning {nm}...")
-            try:
-                r = fetch(tk, start, end)
-                if r.empty or len(r) < 50:
-                    continue
-                d   = add_indicators(r)
-                cp  = float(d['Close'].iloc[-1])
-                rv  = float(d['RSI'].iloc[-1])
-                mv  = float(d['MACD'].iloc[-1])
-                ret = ((cp / float(d['Close'].iloc[0])) - 1) * 100
-                s2  = float(d['SMA_200'].iloc[-1])
-                if not (rsi_min<=rv<=rsi_max): continue
-                if not (ret_min<=ret<=ret_max): continue
-                if trend_f=="Above SMA200" and cp<=s2: continue
-                if trend_f=="Below SMA200" and cp>=s2: continue
-                if macd_f=="Bullish" and mv<=0: continue
-                if macd_f=="Bearish" and mv>=0: continue
-                sig = ("BUY","buy")   if rv<40 and mv>0 \
-                 else ("SELL","sell") if rv>60 and mv<0 \
-                 else ("HOLD","hold")
-                results.append(dict(name=nm, ticker=tk, price=cp,
-                                    rsi=rv, macd=mv, ret=ret, sig=sig))
-            except Exception:
-                continue
-        bar.empty()
-
-        if results:
-            st.success(f"✅ {len(results)} stocks matched your criteria")
-            for r in results:
-                rc = "#4caf50" if r['ret']>=0 else "#f44336"
-                st.markdown(f"""
-                <div class='scr-row'>
-                    <div style='flex:2;'>
-                        <div style='font-weight:700;color:#1a1a2e;'>{r['name']}</div>
-                        <div style='color:#888;font-size:0.75rem;'>{r['ticker']}</div>
-                    </div>
-                    <div style='flex:1;text-align:center;font-weight:700;color:#1a1a2e;'>
-                        ₹{r['price']:,.2f}
-                    </div>
-                    <div style='flex:1;text-align:center;color:#555;'>
-                        RSI: {r['rsi']:.1f}
-                    </div>
-                    <div style='flex:1;text-align:center;font-weight:600;color:{rc};'>
-                        {"+" if r['ret']>=0 else ""}{r['ret']:.1f}%
-                    </div>
-                    <div style='flex:1;text-align:right;'>
-                        <span class='pill {r["sig"][1]}'>{r["sig"][0]}</span>
-                    </div>
-                </div>""", unsafe_allow_html=True)
-        else:
-            st.warning("No stocks matched. Try widening your filters.")
-
-# ══════════════════════════════════════════════════════════════
-# COMPARE
-# ══════════════════════════════════════════════════════════════
-elif page == "⚖️ Compare":
-    st.markdown("""
-    <div style='font-size:1.6rem;font-weight:800;color:#1a1a2e;margin-bottom:4px;'>
-    ⚖️ Stock Comparison</div>
-    <div style='color:#888;margin-bottom:20px;'>
-    Compare two stocks side by side</div>
-    """, unsafe_allow_html=True)
-
-    c1, c2 = st.columns(2)
-    with c1:
-        n1 = st.selectbox("Stock 1", list(NSE_STOCKS.keys()), index=0)
-        t1 = NSE_STOCKS[n1]
-    with c2:
-        n2 = st.selectbox("Stock 2", list(NSE_STOCKS.keys()), index=1)
-        t2 = NSE_STOCKS[n2]
-
-    with st.spinner("Loading..."):
-        r1 = fetch(t1, start, end)
-        r2 = fetch(t2, start, end)
-
-    if r1.empty or r2.empty:
-        st.error("Could not load one or both stocks.")
-        st.stop()
-
-    d1 = add_indicators(r1)
-    d2 = add_indicators(r2)
-
-    norm1 = (d1['Close'] / float(d1['Close'].iloc[0])) * 100
-    norm2 = (d2['Close'] / float(d2['Close'].iloc[0])) * 100
-    fig_n = go.Figure()
-    fig_n.add_trace(go.Scatter(x=d1.index, y=norm1, name=n1,
-                               line=dict(color='#1565c0', width=2)))
-    fig_n.add_trace(go.Scatter(x=d2.index, y=norm2, name=n2,
-                               line=dict(color='#f44336', width=2)))
-    plot_cfg(fig_n, h=360, title="Normalised Performance (Base 100)")
-    st.plotly_chart(fig_n, use_container_width=True)
-
-    m1, m2 = st.columns(2)
-    def make_stat(d, nm):
-        cp  = float(d['Close'].iloc[-1])
-        ret = ((cp/float(d['Close'].iloc[0]))-1)*100
-        rv  = float(d['RSI'].iloc[-1])
-        sh  = d['Daily_Return'].mean()/d['Daily_Return'].std()*np.sqrt(252)
-        ddv = ((d['Close']/d['Close'].cummax())-1).min()*100
-        vv  = float(d['Volatility'].iloc[-1])
-        rc  = "#4caf50" if ret>=0 else "#f44336"
-        html = f"""
-        <div style='background:white;border-radius:14px;padding:20px;
-        box-shadow:0 1px 4px rgba(0,0,0,0.07);'>
-        <div style='font-size:1rem;font-weight:700;color:#1a1a2e;
-        margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid #f0f0f0;'>
-        {nm}</div>"""
-        for k, v, vc2 in [
-            ("Price",      f"₹{cp:,.2f}",  "#1a1a2e"),
-            ("Return",     f"{'+'if ret>=0 else ''}{ret:.2f}%", rc),
-            ("RSI",        f"{rv:.1f}",     "#1a1a2e"),
-            ("Sharpe",     f"{sh:.2f}",     "#1a1a2e"),
-            ("Max DD",     f"{ddv:.2f}%",   "#f44336"),
-            ("Volatility", f"{vv:.2f}%",    "#1a1a2e"),
-            ("Best Day",   f"+{d['Daily_Return'].max():.2f}%", "#4caf50"),
-            ("Worst Day",  f"{d['Daily_Return'].min():.2f}%",  "#f44336"),
-        ]:
-            html += f"""<div class='stat-row'>
-            <span class='sk'>{k}</span>
-            <span class='sv' style='color:{vc2};'>{v}</span></div>"""
-        html += "</div>"
-        return html
-
-    m1.markdown(make_stat(d1, n1), unsafe_allow_html=True)
-    m2.markdown(make_stat(d2, n2), unsafe_allow_html=True)
-
-    fig_r2 = go.Figure()
-    fig_r2.add_trace(go.Scatter(x=d1.index, y=d1['RSI'], name=n1,
-                                line=dict(color='#1565c0', width=1.5)))
-    fig_r2.add_trace(go.Scatter(x=d2.index, y=d2['RSI'], name=n2,
-                                line=dict(color='#f44336', width=1.5)))
-    fig_r2.add_hline(y=70, line_dash='dash', line_color='#f44336', line_width=1)
-    fig_r2.add_hline(y=30, line_dash='dash', line_color='#4caf50', line_width=1)
-    plot_cfg(fig_r2, h=260, title="RSI Comparison")
-    fig_r2.update_yaxes(range=[0,100])
-    st.plotly_chart(fig_r2, use_container_width=True)
-
-    comb = pd.DataFrame({
-        n1: d1['Daily_Return'],
-        n2: d2['Daily_Return']
-    }).dropna()
-    corr = comb.corr().iloc[0,1]
-    fig_c = px.scatter(comb, x=n1, y=n2, trendline="ols",
-                       title=f"Return Correlation: {corr:.3f}",
-                       color_discrete_sequence=['#1565c0'])
-    plot_cfg(fig_c, h=300)
-    st.plotly_chart(fig_c, use_container_width=True)
 
 # ══════════════════════════════════════════════════════════════
 # PORTFOLIO
